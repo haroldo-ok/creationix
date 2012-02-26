@@ -1,3 +1,5 @@
+var logger = require('nlogger').logger(module);
+
 // A super simple logging middleware
 module.exports = function setup(special) {
   special = special || {
@@ -23,7 +25,7 @@ module.exports = function setup(special) {
         headers.Server = "NodeJS " + process.version;
         headers["X-Runtime"] = Date.now() - start;
       }
-      console.log("%s %s %s %s", req.method, req.url, code, extra.join(" "));
+      logger.info("Request: {} {} {} {}", req.method, req.url, code, extra);
       res.writeHead = writeHead;
       res.writeHead(code, headers);
     };
